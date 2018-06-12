@@ -78,13 +78,13 @@ var HomePage = /** @class */ (function () {
             _this.deleteMarkers();
             snapshotToArray(resp).forEach(function (data) {
                 if (data.uuid !== _this.device.uuid) {
-                    var image = 'assets/imgs/sanjay.png';
+                    var image = 'assets/imgs/location2.png';
                     var updatelocation = new google.maps.LatLng(data.latitude, data.longitude);
                     _this.addMarker(updatelocation, image);
                     _this.setMapOnAll(_this.map);
                 }
                 else {
-                    var image = 'assets/imgs/sanjay.png';
+                    var image = 'assets/imgs/location2.png';
                     var updatelocation = new google.maps.LatLng(data.latitude, data.longitude);
                     _this.addMarker(updatelocation, image);
                     _this.setMapOnAll(_this.map);
@@ -106,7 +106,7 @@ var HomePage = /** @class */ (function () {
             _this.deleteMarkers();
             _this.updateGeolocation(_this.device.uuid, data.coords.latitude, data.coords.longitude);
             var updatelocation = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
-            var image = 'assets/imgs/sanjay.png';
+            var image = 'assets/imgs/location2.png';
             _this.addMarker(updatelocation, image);
             _this.setMapOnAll(_this.map);
             // console.log(this.device.uuid);
@@ -116,7 +116,8 @@ var HomePage = /** @class */ (function () {
         var marker = new google.maps.Marker({
             position: location,
             map: this.map,
-            icon: image
+            icon: image,
+            animation: google.maps.Animation.DROP
         });
         this.markers.push(marker);
     };
@@ -134,11 +135,13 @@ var HomePage = /** @class */ (function () {
     };
     //from update firebase
     HomePage.prototype.updateGeolocation = function (uuid, lat, lng) {
+        // console.log(localStorage.getItem('mykey'));
         if (localStorage.getItem('mykey')) {
             __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + localStorage.getItem('mykey')).set({
                 uuid: uuid,
                 latitude: lat,
-                longitude: lng
+                longitude: lng,
+                uName: 'sanjay'
             });
         }
         else {
@@ -153,15 +156,16 @@ var HomePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]) === "function" && _a || Object)
     ], HomePage.prototype, "mapElement", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Ionic Blank\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div #map id="map"></div>\n  {{s}}\n</ion-content>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n     SB | Track Location\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content padding>\n  <div #map id="map"></div>\n  {{s}}\n</ion-content>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */]) === "function" && _e || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c, _d, _e;
 }());
 
 var snapshotToArray = function (snapshot) {
