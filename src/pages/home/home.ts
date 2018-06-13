@@ -18,8 +18,10 @@ export class HomePage {
   
   markers = [];
   ref = firebase.database().ref('geolocations/');
-  
 
+
+  
+  
   constructor(public navCtrl: NavController, public platform: Platform, private geolocation: Geolocation,private device: Device) 
   {    
     platform.ready().then(() => {
@@ -27,9 +29,11 @@ export class HomePage {
     });
 
     //
-    this.ref.on('value', resp => {
+    this.ref.on('value', resp => 
+    {
       this.deleteMarkers();
-      snapshotToArray(resp).forEach(data => {
+      snapshotToArray(resp).forEach(data => 
+      {
         if(data.uuid !== this.device.uuid) {
           let image = 'assets/imgs/location2.png';
           let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
@@ -43,6 +47,18 @@ export class HomePage {
         }
       });
     });
+
+
+    //console data
+    this.ref.on("value", function(snapshot) 
+    {
+      console.log(snapshot.val());
+    }, function (error) {
+      console.log("Error: " + error.code);
+   });
+
+
+
   }
 
 
@@ -127,9 +143,9 @@ export class HomePage {
   
 }
 
-export const snapshotToArray = snapshot => {
+export const snapshotToArray = snapshot => 
+{
   let returnArr = [];
-
   snapshot.forEach(childSnapshot => {
       let item = childSnapshot.val();
       item.key = childSnapshot.key;
