@@ -91,6 +91,12 @@ var HomePage = /** @class */ (function () {
                 }
             });
         });
+        //console data
+        this.ref.on("value", function (snapshot) {
+            console.log(snapshot.val());
+        }, function (error) {
+            console.log("Error: " + error.code);
+        });
     }
     HomePage.prototype.initMap = function () {
         var _this = this;
@@ -136,22 +142,30 @@ var HomePage = /** @class */ (function () {
     //from update firebase
     HomePage.prototype.updateGeolocation = function (uuid, lat, lng) {
         // console.log(localStorage.getItem('mykey'));
+        var userId = '9575353073';
+        var pass = 1234;
         if (localStorage.getItem('mykey')) {
-            __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + localStorage.getItem('mykey')).set({
+            __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + userId).set({
                 uuid: uuid,
                 latitude: lat,
                 longitude: lng,
-                uName: 'sanjay'
+                userId: userId,
+                pass: pass,
+                time: new Date().getTime()
             });
         }
         else {
+            //console.log('not found');
             var newData = this.ref.push();
             newData.set({
                 uuid: uuid,
                 latitude: lat,
-                longitude: lng
+                longitude: lng,
+                userId: userId,
+                pass: pass,
+                time: new Date().getTime()
             });
-            localStorage.setItem('mykey', newData.key);
+            localStorage.setItem('mykey', userId);
         }
     };
     __decorate([
@@ -160,7 +174,7 @@ var HomePage = /** @class */ (function () {
     ], HomePage.prototype, "mapElement", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n     SB | Track Location\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n\n<ion-content padding>\n  <div #map id="map"></div>\n  {{s}}\n</ion-content>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n     SB | Track Location\n    </ion-title>\n  </ion-navbar>\n  \n</ion-header>\n\n\n\n<ion-content padding>\n  <div #map id="map"></div>\n  {{s}}\n</ion-content>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */]])
     ], HomePage);

@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
 
+import { Sim } from '@ionic-native/sim';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,9 +30,8 @@ import { Device } from '@ionic-native/device';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
-    Device
+    Device,
+    Sim
   ]
-
-  
 })
 export class AppModule {}

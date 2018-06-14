@@ -44,8 +44,9 @@ webpackEmptyAsyncContext.id = 189;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_sim__ = __webpack_require__(431);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,18 +61,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 //
 
 
+//sim
+
 
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, platform, geolocation, device) {
+    function HomePage(navCtrl, platform, geolocation, device, sim) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.platform = platform;
         this.geolocation = geolocation;
         this.device = device;
+        this.sim = sim;
         this.markers = [];
-        this.ref = __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/');
+        this.ref = __WEBPACK_IMPORTED_MODULE_5_firebase__["database"]().ref('geolocations/');
         platform.ready().then(function () {
             _this.initMap();
+            //sim info
+            _this.sim.getSimInfo().then(function (info) { return console.log('Sim info: ', info); }, function (err) { return alert('Unable to get sim info: '); });
         });
         //
         this.ref.on('value', function (resp) {
@@ -97,6 +103,13 @@ var HomePage = /** @class */ (function () {
         }, function (error) {
             console.log("Error: " + error.code);
         });
+        // this.sim.hasReadPermission().then(
+        //   (info) => console.log('Has permission: ', info)
+        // );
+        // this.sim.requestReadPermission().then(
+        //   () => console.log('Permission granted'),
+        //   () => console.log('Permission denied')
+        // );
     }
     HomePage.prototype.initMap = function () {
         var _this = this;
@@ -144,31 +157,29 @@ var HomePage = /** @class */ (function () {
         // console.log(localStorage.getItem('mykey'));
         var userId = '9575353073';
         var pass = 1234;
-        // if(localStorage.getItem('mykey')) 
-        // { 
-        console.log('Found');
-        __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + userId).set({
-            uuid: uuid,
-            latitude: lat,
-            longitude: lng,
-            userId: userId,
-            pass: pass,
-            time: new Date().getTime()
-        });
-        //}//else 
-        // {
-        //   console.log('not found');
-        //   let newData = this.ref.push();
-        //   newData.set({
-        //     uuid: uuid,
-        //     latitude: lat,
-        //     longitude: lng,
-        //     userId:userId,
-        //     pass:pass,
-        //     time: new Date().getTime()
-        //   });
-        //   localStorage.setItem('mykey',userId)
-        // }
+        if (localStorage.getItem('mykey')) {
+            __WEBPACK_IMPORTED_MODULE_5_firebase__["database"]().ref('geolocations/' + userId).set({
+                uuid: uuid,
+                latitude: lat,
+                longitude: lng,
+                userId: userId,
+                pass: pass,
+                time: new Date().getTime()
+            });
+        }
+        else {
+            //console.log('not found');
+            var newData = this.ref.push();
+            newData.set({
+                uuid: uuid,
+                latitude: lat,
+                longitude: lng,
+                userId: userId,
+                pass: pass,
+                time: new Date().getTime()
+            });
+            localStorage.setItem('mykey', userId);
+        }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),
@@ -178,10 +189,10 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n     SB | Track Location\n    </ion-title>\n  </ion-navbar>\n  \n</ion-header>\n\n\n\n<ion-content padding>\n  <div #map id="map"></div>\n  {{s}}\n</ion-content>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_device__["a" /* Device */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_sim__["a" /* Sim */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_sim__["a" /* Sim */]) === "function" && _f || Object])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 var snapshotToArray = function (snapshot) {
@@ -225,6 +236,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_geolocation__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_device__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_sim__ = __webpack_require__(431);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -239,6 +251,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 //
+
 
 
 var AppModule = /** @class */ (function () {
@@ -266,7 +279,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] },
                 __WEBPACK_IMPORTED_MODULE_7__ionic_native_geolocation__["a" /* Geolocation */],
-                __WEBPACK_IMPORTED_MODULE_8__ionic_native_device__["a" /* Device */]
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_device__["a" /* Device */],
+                __WEBPACK_IMPORTED_MODULE_9__ionic_native_sim__["a" /* Sim */]
             ]
         })
     ], AppModule);
@@ -328,9 +342,10 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/home/creates11/SANJAY/Ionic/map/ionic-geolocation-tracking/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=app.component.js.map

@@ -3,6 +3,9 @@ import { NavController, Platform } from 'ionic-angular';
 //
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
+//sim
+import { Sim } from '@ionic-native/sim';
+
 import * as firebase from 'firebase';
 
 declare var google: any;
@@ -19,13 +22,17 @@ export class HomePage {
   markers = [];
   ref = firebase.database().ref('geolocations/');
 
-
   
-  
-  constructor(public navCtrl: NavController, public platform: Platform, private geolocation: Geolocation,private device: Device) 
+  constructor(public navCtrl: NavController, public platform: Platform, private geolocation: Geolocation,private device: Device,private sim: Sim) 
   {    
     platform.ready().then(() => {
       this.initMap();
+      
+      //sim info
+      this.sim.getSimInfo().then(
+      (info) => console.log('Sim info: ', info),
+      (err) => alert('Unable to get sim info: ')
+      );
     });
 
     //
@@ -58,6 +65,16 @@ export class HomePage {
    });
 
 
+   
+
+  // this.sim.hasReadPermission().then(
+  //   (info) => console.log('Has permission: ', info)
+  // );
+  
+  // this.sim.requestReadPermission().then(
+  //   () => console.log('Permission granted'),
+  //   () => console.log('Permission denied')
+  // );
 
   }
 
