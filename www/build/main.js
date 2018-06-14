@@ -142,23 +142,33 @@ var HomePage = /** @class */ (function () {
     //from update firebase
     HomePage.prototype.updateGeolocation = function (uuid, lat, lng) {
         // console.log(localStorage.getItem('mykey'));
-        if (localStorage.getItem('mykey')) {
-            __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + localStorage.getItem('mykey')).set({
-                uuid: uuid,
-                latitude: lat,
-                longitude: lng,
-                uName: 'sanjay'
-            });
-        }
-        else {
-            var newData = this.ref.push();
-            newData.set({
-                uuid: uuid,
-                latitude: lat,
-                longitude: lng
-            });
-            localStorage.setItem('mykey', newData.key);
-        }
+        var userId = '9575353073';
+        var pass = 1234;
+        // if(localStorage.getItem('mykey')) 
+        // { 
+        console.log('Found');
+        __WEBPACK_IMPORTED_MODULE_4_firebase__["database"]().ref('geolocations/' + userId).set({
+            uuid: uuid,
+            latitude: lat,
+            longitude: lng,
+            userId: userId,
+            pass: pass,
+            time: new Date().getTime()
+        });
+        //}//else 
+        // {
+        //   console.log('not found');
+        //   let newData = this.ref.push();
+        //   newData.set({
+        //     uuid: uuid,
+        //     latitude: lat,
+        //     longitude: lng,
+        //     userId:userId,
+        //     pass:pass,
+        //     time: new Date().getTime()
+        //   });
+        //   localStorage.setItem('mykey',userId)
+        // }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('map'),

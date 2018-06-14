@@ -121,28 +121,35 @@ export class HomePage {
   updateGeolocation(uuid, lat, lng) 
   {
    // console.log(localStorage.getItem('mykey'));
-    if(localStorage.getItem('mykey')) {
-      firebase.database().ref('geolocations/'+localStorage.getItem('mykey')).set({
+      let userId = '9575353073';
+      let pass = 1234;
+    if(localStorage.getItem('mykey')) 
+    { 
+      firebase.database().ref('geolocations/'+userId).set({
         uuid: uuid,
         latitude: lat,
         longitude : lng,
-        uName:'sanjay'
+        userId:userId,
+        pass:pass,
+        time: new Date().getTime()
       });
-    } else {
+    }else 
+    {
+      //console.log('not found');
       let newData = this.ref.push();
       newData.set({
         uuid: uuid,
         latitude: lat,
-        longitude: lng
+        longitude: lng,
+        userId:userId,
+        pass:pass,
+        time: new Date().getTime()
+        
       });
-      localStorage.setItem('mykey', newData.key);
+      localStorage.setItem('mykey',userId)
     }
-  }
-
-  //
-  
+  } 
 }
-
 export const snapshotToArray = snapshot => 
 {
   let returnArr = [];
