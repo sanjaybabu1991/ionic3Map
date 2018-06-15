@@ -5,7 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-//
+import { IndexPage } from '../pages/index/index';
+import { AdminPage } from '../pages/admin/admin';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
 
@@ -14,7 +15,9 @@ import { Sim } from '@ionic-native/sim';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    IndexPage,
+    AdminPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,9 @@ import { Sim } from '@ionic-native/sim';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    IndexPage,
+    AdminPage
   ],
   providers: [
     StatusBar,

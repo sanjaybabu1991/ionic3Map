@@ -15,14 +15,22 @@ const config = {
   messagingSenderId: "766037115636"
 };
 
-import { HomePage } from '../pages/home/home';
+// import { HomePage } from '../pages/home/home';
+// @Component({
+//   templateUrl: 'app.html'
+// })
+// export class MyApp 
+// {
+//   rootPage:any = HomePage;
+import { IndexPage } from '../pages/index/index';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp 
 {
-  rootPage:any = HomePage;
-  
+  rootPage:any = IndexPage;
+
+
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) 
   {
     platform.ready().then(() => {
