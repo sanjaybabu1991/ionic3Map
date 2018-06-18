@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { IndexPage } from './index';
+import { IndexPage } from '../../pages/index/index';
 
 @NgModule({
   declarations: [

@@ -37,6 +37,22 @@ module.exports = [
     "clobbers": [
       "window.Keyboard"
     ]
+  },
+  {
+    "id": "cordova-plugin-sim.Sim",
+    "file": "plugins/cordova-plugin-sim/www/sim.js",
+    "pluginId": "cordova-plugin-sim",
+    "merges": [
+      "window.plugins.sim"
+    ]
+  },
+  {
+    "id": "cordova-plugin-sim.SimAndroid",
+    "file": "plugins/cordova-plugin-sim/www/android/sim.js",
+    "pluginId": "cordova-plugin-sim",
+    "merges": [
+      "window.plugins.sim"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -47,7 +63,8 @@ module.exports.metadata =
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-ionic-webview": "1.1.19",
-  "cordova-plugin-ionic-keyboard": "2.0.5"
+  "cordova-plugin-ionic-keyboard": "2.0.5",
+  "cordova-plugin-sim": "1.3.3"
 };
 // BOTTOM OF METADATA
 });
